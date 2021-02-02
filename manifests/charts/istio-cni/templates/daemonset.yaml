@@ -92,6 +92,12 @@ spec:
             # Deploy as a standalone CNI plugin or as chained?
             - name: CHAINED_CNI_PLUGIN
               value: "{{ .Values.cni.chained }}"
+          resources:
+{{- if .Values.cni.resources }}
+{{ toYaml .Values.cni.resources | trim | indent 12 }}
+{{- else }}
+{{ toYaml .Values.global.defaultResources | trim | indent 12 }}
+{{- end }}
           volumeMounts:
             - mountPath: /host/opt/cni/bin
               name: cni-bin-dir
@@ -108,6 +114,12 @@ spec:
           imagePullPolicy: {{ .Values.cni.pullPolicy | default .Values.global.imagePullPolicy }}
 {{- end }}
 
+          resources:
+{{- if .Values.cni.resources }}
+{{ toYaml .Values.cni.resources | trim | indent 12 }}
+{{- else }}
+{{ toYaml .Values.global.defaultResources | trim | indent 12 }}
+{{- end }}
           command: ["/opt/cni/bin/istio-cni-repair"]
           env:
           - name: "REPAIR_NODE-NAME"

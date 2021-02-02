@@ -50,6 +50,15 @@ cni:
   taint:
     enabled: false
 
+  # Resources for a istio-cni-node install
+  resources:
+    limits:
+      cpu: 400m
+      memory: 400Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
 # Revision is set as 'version' label and part of the resource names when installing multiple control planes.
 revision: ""
 
